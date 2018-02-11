@@ -1,9 +1,12 @@
 library(here)
 library(SuperLearner)
 library(ck37r)
+library(readr)
 
-Seq <- read_csv(table_path = here("data", "Seq.csv"))
-AA <- read_csv(table_path = here("data", "AA.csv"))
+Seq <- read_csv(here::here("Project1.Predict_HIV_Progression",
+"data", "Seq.csv"))
+AA <- read_csv(here::here("Project1.Predict_HIV_Progression",
+"data", "AA.csv"))
 
 #############################################################
 # predict with CV.SuperLearner
