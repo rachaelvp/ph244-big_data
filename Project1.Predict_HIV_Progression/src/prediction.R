@@ -169,3 +169,60 @@ ck37r::cvsl_plot_roc(AA1_auc, Y = AA1_auc$Y,
                      using Top 10 AA Positions from both PR and RT",
                      digits = 4)
 dev.off()
+
+Seq1 <- Seq[,-c(22,23)]
+AA2 <- AA1[,-c(1)]
+AA2 <- data.frame(Seq1, AA2)
+
+AA2_auc <- CV.SuperLearner(Y=AA2[,1], X=AA2[,-1], family = 'binomial',
+           SL.library = SL.library, parallel = 'multicore',
+           method = "method.AUC",
+           cvControl = SuperLearner.CV.control(V = folds, stratifyCV = TRUE),
+           innerCvControl = rep(list(SuperLearner.CV.control(V = folds,
+           stratifyCV = TRUE)), folds))
+
+           # Risk is based on: Area under ROC curve (AUC)
+           #
+           # All risk estimates are based on V =  10
+           #
+           #      Algorithm     Ave se     Min     Max
+           #  Super Learner 0.79011 NA 0.71337 0.84566
+           #    Discrete SL 0.79011 NA 0.71337 0.84566
+           #  SL.ranger_All 0.79011 NA 0.71337 0.84566
+pdf(file = here::here("Project1.Predict_HIV_Progression",
+                      "graphs", "auc_onlyAAandDNA.pdf"))
+ck37r::cvsl_plot_roc(AA2_auc, Y = AA2_auc$Y,
+    title = "Cross Validated AUC for Prediction of Short-term HIV Improvement
+              using Top 10 AA Positions and Top 10 DNA Positions
+              from both PR and RT",
+                                digits = 4)
+           dev.off()
+
+Seq1 <- Seq[,-c(22,23)]
+AA3 <- AA[,-c(1)]
+AA3 <- data.frame(Seq1, AA3)
+
+AA3_auc <- CV.SuperLearner(Y=AA3[,1], X=AA3[,-1], family = 'binomial',
+           SL.library = SL.library, parallel = 'multicore',
+           method = "method.AUC",
+           cvControl = SuperLearner.CV.control(V = folds, stratifyCV = TRUE),
+           innerCvControl = rep(list(SuperLearner.CV.control(V = folds,
+           stratifyCV = TRUE)), folds))
+
+           # Risk is based on: Area under ROC curve (AUC)
+           #
+           # All risk estimates are based on V =  10
+           #
+           #      Algorithm     Ave se     Min     Max
+           #  Super Learner 0.85826 NA 0.79224 0.93075
+           #    Discrete SL 0.85826 NA 0.79224 0.93075
+           #  SL.ranger_All 0.85826 NA 0.79224 0.93075
+
+pdf(file = here::here("Project1.Predict_HIV_Progression",
+                                 "graphs", "auc_All.pdf"))
+ck37r::cvsl_plot_roc(AA3_auc, Y = AA3_auc$Y,
+  title = "Cross Validated AUC for Prediction of Short-term HIV Improvement
+        using Top 10 AA Positions and Top 10 DNA Positions
+        from both PR and RT, CD4 count, and Viral Load",
+        digits = 4)
+                      dev.off()
