@@ -1,3 +1,11 @@
+library(Biostrings)
+library(muscle)
+library(msa)
+library(muscle)
+library(seqinr)
+library(ggplot2)
+library(dplyr)
+
 train <- read.csv("~/Desktop/training_data.csv")
 
 train1 <- train %>%
