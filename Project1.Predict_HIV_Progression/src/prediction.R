@@ -81,7 +81,7 @@ summary(Seq_auc)
 #  SL.ranger_All 0.84958 NA 0.79668 0.89403
 
 pdf(file = here::here("Project1.Predict_HIV_Progression",
-           "graphs", "Seq_auc.csv"))
+           "graphs", "Seq_auc.pdf"))
 ck37r::cvsl_plot_roc(Seq_auc, Y = Seq_auc$Y,
                      title = "Cross Validated AUC for
                      Prediction of Short-term HIV Improvement
@@ -107,7 +107,7 @@ summary(AA_auc)
 #  SL.ranger_All 0.83252 NA 0.75198 0.90267
 
 pdf(file = here::here("Project1.Predict_HIV_Progression",
-           "graphs", "AA_auc.csv"))
+           "graphs", "AA_auc.pdf"))
 ck37r::cvsl_plot_roc(AA_auc, Y = AA_auc$Y,
                      title = "Cross Validated AUC for
                      Prediction of Short-term HIV Improvement
@@ -137,7 +137,7 @@ Seq1_auc <- CV.SuperLearner(Y=Seq1[,1], X=Seq1[,-1], family = 'binomial',
 # SL.ranger_All 0.76821 NA 0.63584 0.83001
 
 pdf(file = here::here("Project1.Predict_HIV_Progression",
-           "graphs", "Seq_auc_onlyDNA.csv"))
+           "graphs", "Seq_auc_onlyDNA.pdf"))
 ck37r::cvsl_plot_roc(Seq1_auc, Y = Seq1_auc$Y,
                      title = "Cross Validated AUC for
                      Prediction of Short-term HIV Improvement
@@ -162,7 +162,7 @@ AA1_auc <- CV.SuperLearner(Y=AA1[,1], X=AA1[,-1], family = 'binomial',
 # SL.ranger_All 0.69333 NA 0.58499 0.75284
 
 pdf(file = here::here("Project1.Predict_HIV_Progression",
-           "graphs", "AA_auc_onlyDNA.csv"))
+           "graphs", "AA_auc_onlyAA.pdf"))
 ck37r::cvsl_plot_roc(AA1_auc, Y = AA1_auc$Y,
                      title = "Cross Validated AUC for
                      Prediction of Short-term HIV Improvement
