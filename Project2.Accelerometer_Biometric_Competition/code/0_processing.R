@@ -168,47 +168,20 @@ write.csv(summary_table,
 "data", "summary_table.csv"))
 # train_summ <- join(train, summ, by = "Device")
 
-###############################################################################
-#Additional Question Specific Processing
-###############################################################################
-
-# obtain the time from the Unix timestamp
-T <- as.POSIXct(train$T, origin="1970-01-01")
-t <- strftime(T, format="%H:%M:%S")
-# create a new time object with a constant date
-ct <- as.POSIXct(strptime(t, format="%H:%M:%S"))
-ctt <- as.POSIXct(t, format="%H:%M:%S")
-train$ct <- ct
-train$ctt <- ctt
-train$t <- t
-
-lt <- as.POSIXlt(t, format="%H:%M:%S")
-train$lt <- lt
-sec <- x$sec + x$min*60 + x$hour*3600
-train$sec <- sec
-
-# You may also try ggplot:
-
-library(ggplot2)
-df$time <- as.POSIXct(strptime(df$Time, format="%H:%M:%S"))
-
-# Automatic scale selection
-ggplot(data = df, aes(x = time, y = EcNo)) + geom_point()
-
-# scale_x_datetime is a ggplot function, but for the nice arguments date_breaks,
-# and date_format you need package scales:
-
-library(scales)
-
-ggplot(data = df, aes(x = time, y = EcNo)) + geom_point() +
-  scale_x_datetime(breaks = date_breaks("1 sec"), labels = date_format("%S"))
-
-ggplot(data = df, aes(x = time, y = EcNo)) + geom_point() +
-  scale_x_datetime(breaks = date_breaks("1 sec"), labels = date_format("%OS3"))
-
-ggplot(data = df, aes(x = time, y = EcNo)) + geom_point() +
-  scale_x_datetime(breaks = date_breaks("4 sec"), labels = date_format("%M:%S"))
-
+# # obtain the time from the Unix timestamp
+# T <- as.POSIXct(train$T, origin="1970-01-01")
+# t <- strftime(T, format="%H:%M:%S")
+# # create a new time object with a constant date
+# ct <- as.POSIXct(strptime(t, format="%H:%M:%S"))
+# ctt <- as.POSIXct(t, format="%H:%M:%S")
+# train$ct <- ct
+# train$ctt <- ctt
+# train$t <- t
+#
+# lt <- as.POSIXlt(t, format="%H:%M:%S")
+# train$lt <- lt
+# sec <- lt$sec + lt$min*60 + lt$hour*3600
+# train$sec <- sec
 
 ###############################################################################
 # save it
