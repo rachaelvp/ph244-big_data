@@ -1,10 +1,10 @@
 ---
-title: 'Project 3: Computing \\ PH244 - Big Data: A Public Health Perspective'
+title: "Project 3: Computing \\ PH244 - Big Data: A Public Health Perspective"
 author: "Rachael Phillips"
 date: "April 9, 2018"
-output:
-  pdf_document
+output: pdf_document
 ---
+
 ### Problem:
 
 The file `ss13hus.csv.bz2` under `bCourses/Files/Data/` contains household-specific data from the 2009-2013 US Census American Community Survey. This survey obtains a wealth of information on people and households every year, with about 1% of the total population surveyed in each year. The dictionary describing all the data fields is available as `PUMS-Data-Dictionary-2009-2013.pdf` under the same directory. The zipped file is about 600MB, and be careful about unzipping it. You are *required* to use `R` for this computing project, and need to include your computer code and output in the report. You are *required* to use `Rmd` to write the report, which can easily include the `R` code. There is *no page limit* on this report.
@@ -13,9 +13,10 @@ The file `ss13hus.csv.bz2` under `bCourses/Files/Data/` contains household-speci
 
 ```{r setup}
 
-library(dplyr)
 library(here)
+library(dplyr)
 library(ggplot2)
+library(biglm)
 
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = TRUE)
 
@@ -25,11 +26,11 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = TRU
 
 ```{r read_zipped}
 
-system.time(dat_csv <- read.csv(file=here("Project3.Computing","bigdata", "ss13hus.csv.bz2")))
+system.time(dat_csv <- read.csv(here("Project3.Computing","bigdata", "ss13hus.csv.bz2")))
 
-system.time(scan(dat_scan <- file=here("Project3.Computing", "bigdata", "ss13hus.csv.bz2")))
+system.time(dat_scan <- scan(here("Project3.Computing", "bigdata", "ss13hus.csv.bz2"), what="character", quiet = TRUE))
 
-system.time(dat_lines <- readLines(file=here("Project3.Computing", "bigdata", "ss13hus.csv.bz2")))
+system.time(dat_lines <- readLines(here("Project3.Computing", "bigdata", "ss13hus.csv.bz2")))
 
 ```
 
@@ -39,13 +40,13 @@ system.time(dat_lines <- readLines(file=here("Project3.Computing", "bigdata", "s
 
 set.seed(1000)
 
-dat_subset <- dplyr::sample_n(table, 1000000)
+dat_subset <- dplyr::sample_n(dat_csv, 1000000)
 
 dat_sub <- dat_subset %>%
   select(c(REGION, ST, ADJHSG, ADJINC, NP, ACR, BDSP,
   ELEP, GASP, RMSP, VEH, WATP, FINCP, HINCP))
 
-write.csv(dat_sub, file = here("Project3.Computing", "bigdata", "ss13hus_subset.csv"))
+write.csv(dat_sub, here("Project3.Computing", "bigdata", "ss13hus_subset.csv"))
 
 ```  
 
@@ -65,7 +66,7 @@ system.time(dat_sub_ff <- ff(here("Project3.Computing", "bigdata", "ss13hus_subs
 
 ```{r scatterplot}
 
-dat_sub$FINADJ <- dat_sub$FINCP*dat_sub$ADJINC
+dat_sub$FINADJ <- dat_sub$FINCP*((1e-6)*dat_sub$ADJINC)
 
 ggplot(dat_sub, aes(x = BDSP, y = FINADJ)) + geom_point() + stat_smooth(method = "loess", se = TRUE)
 
