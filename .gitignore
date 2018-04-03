@@ -3,3 +3,4 @@
 data/*.RData
 .Rproj.user
 Project3.Computing/bigdata/*.csv*
+*.RData

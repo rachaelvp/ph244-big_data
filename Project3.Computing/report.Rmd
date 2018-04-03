@@ -24,14 +24,16 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = TRU
 
 1. Try 3 different commands of reading the zipped data `ss13hus.csv.bz2` into R: `read.csv()`, `scan()`, and `readLines()`. Use system.time() to record and report the time each function requires to read in the data.
 
-```{r read_zipped}
+```{r read read.csv}
+system.time(dat_csv <- read.csv(here("Desktop", "ss13hus.csv.bz2")))
+```
 
-system.time(dat_csv <- read.csv(here("Project3.Computing","bigdata", "ss13hus.csv.bz2")))
+```{r read scan}
+system.time(dat_scan <- scan(here("Desktop", "ss13hus.csv.bz2"), what="character", quiet = TRUE))
+```
 
-system.time(dat_scan <- scan(here("Project3.Computing", "bigdata", "ss13hus.csv.bz2"), what="character", quiet = TRUE))
-
-system.time(dat_lines <- readLines(here("Project3.Computing", "bigdata", "ss13hus.csv.bz2")))
-
+```{r read readLines}
+system.time(dat_lines <- readLines(here("Desktop", "ss13hus.csv.bz2")))
 ```
 
 2. Create a subset of data by randomly sampling 1,000,000 survey records from `ss13hus.csv.bz2`. Extract the following data fields: `REGION`, `ST`, `ADJHSG`, `ADJINC`, `NP`, `ACR`, `BDSP`, `ELEP`, `GASP`, `RMSP`, `VEH`, `WATP`, `FINCP`, `HINCP`. Save the file as a `csv` for subsequent analysis, with rows representing survey records and columns different data fields. Hint: This is *not* a trivial task, considering the data size, and it involves some amount of programming. You may use a “divide-and-conquer” strategy. In addition, for reproducibility, please use set.seed(1000) to set the random seed.
@@ -52,14 +54,16 @@ write.csv(dat_sub, here("Project3.Computing", "bigdata", "ss13hus_subset.csv"))
 
 3. Try 3 different commands of reading the data you create in Step 2 into `R`: `read.csv()`, `data.table()`, and `ff()`. Use `system.time()` to record and report the time each function requires to read in the data.
 
-```{r read_subset}
+```{r read_subset read.csv}
+system.time(dat_sub_csv <- read.csv(here("Desktop", "ss13hus_subset.csv")))
+```
 
-system.time(dat_sub_csv <- read.csv(here("Project3.Computing", "bigdata", "ss13hus_subset.csv")))
+```{r read_subset data.table}
+system.time(dat_sub_dt <- data.table(here("Desktop", "ss13hus_subset.csv")))
+```
 
-system.time(dat_sub_dt <- data.table(here("Project3.Computing", "bigdata", "ss13hus_subset.csv")))
-
-system.time(dat_sub_ff <- ff(here("Project3.Computing", "bigdata", "ss13hus_subset.csv")))
-
+```{r read_subset ff}
+system.time(dat_sub_ff <- ff(here("Desktop","ss13hus_subset.csv")))
 ```
 
 4. Draw a scatter plot of `BDSP` (the number of bedrooms; a measure of house size) on the x-axis, and `FINCP` (the family income; use `ADJINC` to adjust `FINCP` to constant dollars) on the y-axis. Add a loess smoother, with standard error shading, on the scatter plot using the R package `ggplot2`.
