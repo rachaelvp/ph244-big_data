@@ -35,19 +35,22 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 R: `read.csv()`, `scan()`, and `readLines()`. Use system.time() to record and
 report the time each function requires to read in the data.
 
-```{r read read.csv}
-system.time(dat_csv <- read.csv(here("Project3.Computing", "bigdata",
- "ss13hus.csv.bz2")))
-```
-
 ```{r read scan}
 system.time(dat_scan <- scan(here("Project3.Computing", "bigdata",
  "ss13hus.csv.bz2"), what="character", quiet = TRUE))
+ rm(dat_scan)
 ```
 
 ```{r read readLines}
 system.time(dat_lines <- readLines(here("Project3.Computing", "bigdata",
 "ss13hus.csv.bz2")))
+rm(dat_lines)
+```
+
+```{r read read.csv}
+system.time(dat_csv <- read.csv(here("Project3.Computing", "bigdata",
+ "ss13hus.csv.bz2")))
+ dat_csv <- data.table(dat_csv)
 ```
 
 2. Create a subset of data by randomly sampling 1,000,000 survey records
@@ -69,6 +72,8 @@ dat_sub <- dat_subset %>%
   select(c(REGION, ST, ADJHSG, ADJINC, NP, ACR, BDSP,
   ELEP, GASP, RMSP, VEH, WATP, FINCP, HINCP))
 
+rm(dat_subset)
+
 write.csv(dat_sub, here("Project3.Computing", "bigdata", "ss13hus_subset.csv"))
 ```  
 
@@ -79,16 +84,19 @@ and report the time each function requires to read in the data.
 ```{r read_subset read.csv}
 system.time(dat_sub_csv <- read.csv(here("Project3.Computing", "bigdata",
 "ss13hus_subset.csv")))
+rm(dat_sub_csv)
 ```
 
 ```{r read_subset data.table}
 system.time(dat_sub_dt <- data.table(here("Project3.Computing", "bigdata",
 "ss13hus_subset.csv")))
+rm(dat_sub_dt)
 ```
 
 ```{r read_subset ff}
 system.time(dat_sub_ff <- ff(here("Project3.Computing","bigdata",
 "ss13hus_subset.csv")))
+rm(dat_sub_ff)
 ```
 
 4. Draw a scatter plot of `BDSP` (the number of bedrooms; a measure of
