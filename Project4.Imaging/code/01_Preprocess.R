@@ -49,14 +49,11 @@ patientDir <- sort(list.dirs(path = "stage1", full.names = TRUE, recursive = FAL
 dataframes <- list()
 i = 1
 while(i<1596){
+  # Just as a heads up, this takes about 19 hours to run...
   # Strip the patient out
   patient <- coreHist(patientDir[i])
-  
-  print("1")
+
   setwd("/Volumes/HUGE storage drive/Lexin/")
-  exists<- file.exists(patientDir[i])
-  
-  print(exists)
   
   # Extract the relevant information from the patient
   # Set a loop to try the function if it fails
@@ -121,6 +118,8 @@ training_data <- training_data[!as.logical(sapply(training_data$cancer, function
 save(test_data, file = "actual_test_data.Rdata")
 save(training_data, file = "actual_training_data.Rdata")
 
+
+# The following code is only a first pass at the superlearner.
 
 # Subset the x covariates
 x_covariates <- c("patientid","id", "cancer")
