@@ -24,6 +24,6 @@ colnames(test_data_x) <- gsub("-", "n", colnames(test_data_x))
 # Run the superlearner algorithm
 library("SuperLearner")
 library <- c("SL.glmnet", "SL.glm", "SL.knn", "SL.gam", "SL.mean", "SL.ranger")
-raw_sl <- SuperLearner(Y = training_data_y, X = training_data_x, newX = test_data_x, SL.library = library, family = binomial())
+raw_sl <- SuperLearner(Y = training_data_y, X = training_data_x, newX = test_data_x, SL.library = library, family = binomial(), method = "method.NNLS"	)
 
 save(raw_sl, file = "raw_sl.rData")
